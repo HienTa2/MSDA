@@ -1,0 +1,37 @@
+-- Drop the combined_dashboard_data table if it already exists
+DROP TABLE IF EXISTS public.combined_dashboard_data;
+
+--CREATE TABLE public.combined_dashboard_data AS
+SELECT
+  c.CaseOrder,
+  c.Customer_id,
+  c.State AS churn_state,
+  c.Zip,
+  c.Lat,
+  c.Lng,
+  c.Age,
+  c.Income AS churn_income,
+  c.Churn,
+  c.Tenure,
+  c.MonthlyCharge,
+  c.Bandwidth_GB_Year,
+  a.TractId,
+  a.State AS census_state,
+  a.County AS census_county,
+  a.TotalPop,
+  a.Income AS census_income,
+  a.Poverty,
+  a.Professional,
+  a.Service,
+  a.Office,
+  a.Construction,
+  a.Production,
+  a.Unemployment
+FROM
+  public.churn_data c
+JOIN
+  public.acs2017_census_data a
+ON
+  c.State = a.State
+WHERE
+  a.Income IS NOT NULL;

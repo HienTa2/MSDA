@@ -1,0 +1,9 @@
+ALTER TABLE public.churn_data
+ADD COLUMN Age_Group VARCHAR(5);
+
+UPDATE public.churn_data
+SET Age_Group = CASE
+    WHEN Age < 30 THEN '18-29'
+    WHEN Age < 50 THEN '30-49'
+    ELSE '50+'
+END;
